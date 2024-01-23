@@ -2,7 +2,9 @@ package study.querydsl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.entity.Member;
@@ -32,5 +34,19 @@ public class QuerydslBasicTest {
         em.persist(member3);
         em.persist(member4);
 
+    }
+
+    @Test
+    public void startJPQL(){
+
+        //member1을 찾아라.
+        String qlString =
+                "select m from Member m " +
+                        "where m.username = :username";
+        Member findMember = em.createQuery(qlString, Member.class)
+                .setParameter("username", "member1")
+                .getSingleResult();
+
+        Assertions.assertThat(findMember.getUsername()).isEqualTo("member1");
     }
 }
