@@ -193,10 +193,11 @@ public class QuerydslBasicTest {
         Tuple teamB = result.get(1);
 
         assertThat(teamA.get(team.name)).isEqualTo("teamA");
-        assertThat(teamA.get(member.age.avg())).isEqualTo(10);
+        assertThat(teamA.get(member.age.avg())).isEqualTo(15
+        );
 
-        assertThat(teamA.get(team.name)).isEqualTo("teamB");
-        assertThat(teamA.get(member.age.avg())).isEqualTo(35);
+        assertThat(teamB.get(team.name)).isEqualTo("teamB");
+        assertThat(teamB.get(member.age.avg())).isEqualTo(35);
     }
 
     /**
