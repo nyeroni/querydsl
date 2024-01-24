@@ -331,4 +331,23 @@ public class QuerydslBasicTest {
         assertThat(result).extracting("age")
                 .containsExactly(40);
     }
+
+    /**
+     * 서브 쿼리 goe 사용
+     */
+    @Test
+    public void subQueryGoe() throws Exception{
+        QMember memberSub = new QMember("memberSub");
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(member.age.goe(
+                        JPAExpressions
+                                .select(memberSub.age.avg())
+                                .from(memberSub)
+                ))
+                .fetch();
+        assertThat(result).extracting("age")
+                .containsExactly(30,40);
+    }
 }
