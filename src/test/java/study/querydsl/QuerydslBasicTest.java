@@ -18,6 +18,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static study.querydsl.entity.QMember.member;
+import static study.querydsl.entity.QTeam.team;
 
 @SpringBootTest
 @Transactional
@@ -173,5 +174,27 @@ public class QuerydslBasicTest {
         assertThat(tuple.get(member.age.max())).isEqualTo(40);
         assertThat(tuple.get(member.age.min())).isEqualTo(10);
 
+    }
+
+    /**
+     * 팀의 이름과 각 팀의 평균 연령을 구해라.
+     */
+    @Test
+    public void group() throws Exception{
+        List<Tuple> result = queryFactory
+                .select(team.name, member.age.avg())
+                .from(member)
+                .join(member.team, team)
+                .groupBy(team.name)
+                .fetch();
+
+        Tuple teamA = result.get(0);
+        Tuple teamB = result.get(1);
+
+        assertThat(teamA.get(team.name)).isEqualTo("teamA");
+        assertThat(teamA.get(member.age.avg())).isEqualTo(10);
+
+        assertThat(teamA.get(team.name)).isEqualTo("teamB");
+        assertThat(teamA.get(member.age.avg())).isEqualTo(35);
     }
 }
