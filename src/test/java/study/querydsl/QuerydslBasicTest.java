@@ -442,6 +442,13 @@ public class QuerydslBasicTest {
                 .from(member)
                 .fetchFirst();
     }
-
+    @Test
+    public void concat(){
+        String result = queryFactory
+                .select(member.username.concat("_".concat(member.age.stringValue())))
+                .from(member)
+                .where(member.username.eq("member1"))
+                .fetchOne();
+    }
 
 }
