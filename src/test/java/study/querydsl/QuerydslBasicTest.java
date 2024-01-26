@@ -451,7 +451,7 @@ public class QuerydslBasicTest {
                 .fetchOne();
     }
     @Test
-    public void simpleProjection(){
+    public void tupleProjection(){
         List<Tuple> result = queryFactory
                 .select(member.username, member.age)
                 .from(member)
