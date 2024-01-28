@@ -10,9 +10,9 @@ import study.querydsl.entity.QMember;
 
 import java.util.List;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
 import static study.querydsl.entity.QMember.member;
 import static study.querydsl.entity.QTeam.team;
-import static sun.util.locale.LocaleUtils.isEmpty;
 
 public class MemberRepositoryImpl implements MemberRepositoryCustom{
 
